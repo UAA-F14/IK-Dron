@@ -1,0 +1,568 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered
+\usepackage{comment}
+\usepackage{amsmath,amssymb} % defines \allowdisplaybreaks (generalconfig.tex was empty)
+
+\input{generalconfig.tex}
+\begin{document}
+
+\title[Article Title]{IK-Dron Log File (2026) (Bitácora Técnica)}
+
+\author{\fnm{Contreras R.} \sur{Orlando}, \fnm{Garcia B.} \sur{Iker}}
+
+\affil[3]{\orgdiv{Department of Electronic Systems}, \orgname{UAA}, \orgaddress{\street{Av. Universidad 940}, \city{Aguascalientes}, \postcode{20131}, \state{Aguascalientes}, \country{México}}}
+
+%%==================================%%
+%% Sample for unstructured abstract %%
+%%==================================%%
+
+
+%%==================================%%
+%% Sample for structured abstract %%
+%%==================================%%
+
+
+
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Marzo 2026}
+\subsection{Marzo 13 \label{sec:3-13}}
+\subsubsection{Aprendizajes}
+Primeras pruebas de vuelo, recibimos el dron tal y como se ve en la figura
+\ref{fig:Dron1}, el cual es un dron de carreras, con una estructura de fibra de carbono, motores brushless, controladora de vuelo, ESCs y una batería LiPo. El dron se encuentra en buenas condiciones, sin embargo.
+Se recibieron instrucciones de como utilizarlo por el docente Luis Antonio Raygoza Perez resltando los siguientes puntos
+\begin{itemize}
+    \item Antes de energizar el dron se debe de setear el control en las perillas por default tal y como se ve en la imagen \ref{fig:Control}, esto es para evitar que el dron se mueva de forma inesperada al energizarlo.
+    \item Al momento de energizar el dron, se debe de conectar con una mano y con la otra mano se debe de mantener el dron en el suelo, esto es para evitar que el dron se eleve de forma inesperada al energizarlo.
+    \item Al momento de cargarlo, se debe revisar cada celda esto se hace con un checador de baterías, conectando negativo con negativo para evitar hacer corto como se aprecia en la figura \ref{fig:Medidor}
+\end{itemize}
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/3-13Dron.png}
+    \caption{Dron recibido [Marzo 13, 2026]}
+    \label{fig:Dron1}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/Control.png}
+    \caption{Control con perillas en default}
+    \label{fig:Control}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/Checador.png}
+    \caption{Checador de baterías}
+    \label{fig:Medidor}
+\end{figure}
+\subsubsection{Incidentes y puntos de mejora}
+Al realizar las pruebas de vuelo, ocurrieron dos incidentes
+\begin{itemize}
+    \item Una de las tuercas que sujeccionan las helices no estaba bien apretada por lo que salió volando, fue aqui donde empezamos a tomar nota de todo lo que teníamos para el caso de refacciones.
+    \item El cable de la batería no estaba bien sujetado y hubo un momento donde la helice lo cortó por lo que actuamos con cuidado y paramos la operación.
+\end{itemize}
+Frente a estos dos incidentes, se tomaron las siguientes medidas
+Realizar una tabla de componentes y refacciones, esto es para tener un control de lo que tenemos y lo que necesitamos, así como para tener un control de los costos, esta tabla se muestra en el anexo \ref{sec:TablaComponentes}.
+Mientras que para el cable de la batería fue una oportunidad debido a que debíamos incorporar un switch para no estar conectando y desconectando la batería, por lo que se decidió incorporar un switch para evitar este tipo de incidentes en el futuro, esto se hizo con un switch de 1 polos y 2 posiciones. Este switch fue incorporado hasta la sección \ref{sec:4-1}
+
+Además el lugar nos pareció un poco pequeño para realizar las pruebas de vuelo, por lo que se decidió buscar un lugar más amplio para realizar las pruebas, además de que fuera un lugar donde sea facil localizar componentes en caso de desprendimiento, esto se logró en la sección \ref{sec:3-27}.
+
+\subsection{27 Marzo \label{sec:3-27}}
+\subsubsection{Aprendizajes}
+Nos empezamos a familiarizar con el software de librePilot, guardamos la configuración del dron, y empezamos a realizar configuraciones. Al realizar las configuraciones nos dimos cuenta de varios puntos
+\begin{itemize}
+\item Las configuraciones se deben de realizar con el dron \textbf{desarmado} es decir con la configuración en desarmado tal y como se muestra en la figura \ref{fig:lpArmed},
+\item Para que se guarde la configuración se debe conectar con la batería y cargar el dron, esto es algo que no se había hecho antes, por lo que se habían perdido las configuraciones realizadas. 
+\item Para actualizar el firmware se debe ejecutar la secuencia anexada en \ref{sec:Firmware}
+\item Para configurar el control se debe de realizar con el dron desarmado, para esto nosotros nos basamos en el video \cite{TorrenteDigital}, la configuración previa realizada por la primera generación se detalla en el documento de Desarrollo
+
+\end{itemize}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{src/srclog/Disarmed.png}
+    \caption{Dron en estado desarmado}
+    \label{fig:lpArmed}
+\end{figure}
+
+Realizamos una configuración personalizada para mejorar la respuesta del control, ajustando los parámetros de \textit{CruiseControl} y modificando la curva del acelerador (\textit{throttle}).
+
+\subsubsection{Incidentes y puntos de mejora}
+Este día obtuvimos autorización para realizar pruebas en el estadio de la institución, un espacio más seguro y amplio. Logramos un mejor control del vuelo, aunque notamos que el dron tendía a inclinarse hacia un lado, como se aprecia en la imagen \ref{fig:lado}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/lado.png}
+    \caption{Dron inclinado hacia un lado durante el vuelo}
+    \label{fig:lado}
+\end{figure}
+
+Respecto a los incidentes presentados:
+\begin{itemize}
+    \item Personal de seguridad se acercó para verificar que el equipo no contara con cámara y nos advirtió sobre las restricciones de altura sin permisos especiales, sugiriéndonos evitar zonas cercanas a aulas y vehículos. Aprovechamos para consultar sobre áreas permitidas y nos validaron el uso del estadio sin requerir trámites adicionales.
+    \item Durante las pruebas en el estadio, el dron sufrió una caída que fracturó una de las antenas del controlador de vuelo, generando un falso contacto intermitente que obligó a programar su reparación.
+\end{itemize}
+\newpage
+
+\section{Abril 2026}
+\subsection{1 de Abril \label{sec:4-1}}
+\subsubsection{Aprendizajes}
+Esta jornada se destinó a resolver los incidentes reportados en la sección \ref{sec:3-27}. Se reparó la antena del controlador de vuelo y se instaló físicamente el interruptor de encendido para evitar el riesgo detectado en la sección \ref{sec:3-13}. El resultado se observa en la figura \ref{fig:Reparacion}.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/4-1Reparacion.png}
+    \caption{Reparación de antena e integración del interruptor de encendido}
+    \label{fig:Reparacion}
+\end{figure}
+
+\subsubsection{Incidentes y puntos de mejora}
+Durante la soldadura del interruptor, se generó un puente de continuidad accidental con la línea de la batería, provocando un chispazo sin mayores afectaciones. Como punto de mejora, se evaluó reemplazar la cinta de aislar utilizada para sujetar la batería por un arnés de velcro o una banda elástica, facilitando su extracción y garantizando mayor firmeza.
+
+\subsection{10 de Abril \label{sec:4-10}}
+\subsubsection{Aprendizajes}
+Se intentó realizar una sesión de pruebas de vuelo, pero surgió un problema de comunicación entre el dron y la computadora: aunque el sistema reconocía el puerto, no permitía cargar configuraciones. Se intentó actualizar el firmware sin éxito (el software identificaba la conexión pero bloqueaba la escritura, como se muestra en la figura \ref{fig:Firmwarefalla}). Como último recurso, se intentó establecer comunicación serial directa mediante un script en Python a distintas frecuencias de baudios.
+
+\begin{comment}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{src/srclog/Firmwarefalla.png}
+    \caption{Falla al intentar actualizar el firmware}
+    \label{fig:Firmwarefalla}
+\end{figure}
+\end{comment}
+
+\subsubsection{Incidentes y puntos de mejora}
+Dado que el objetivo inicial era portear el firmware a BetaFlight, este fallo en la controladora motivó la búsqueda de una tarjeta compatible con dicho entorno. Tras consultar la situación con el Dr. Raygoza, la recomendación fue intentar un restablecimiento profundo (\textit{hard reset}) o, de lo contrario, reemplazar la controladora para permitir configuraciones avanzadas.
+
+\subsection{12 de Abril}
+\subsubsection{Aprendizajes}
+Se dedicó la jornada a la documentación del proyecto, recopilación de material gráfico y creación del repositorio oficial en GitHub para el control de versiones y almacenamiento de recursos.
+\subsubsection{Incidentes y puntos de mejora}
+No se registraron incidentes. Se identificó la falta de un registro fotográfico y en video más constante de las pruebas, por lo que se acordó mejorar esta cobertura en futuras sesiones.
+
+\section{Mayo 2026}
+\subsection{15 de Mayo}
+\subsubsection{Aprendizajes}
+Se diagnosticó a fondo la tarjeta del dron, identificando que el componente dañado era la placa AIO (\textit{All in One}), la cual integra el microcontrolador, los sensores y los ESCs. El circuito principal corresponde a un microcontrolador STM32F103C8T6 (visible en la figura \ref{fig:CC3DEVO}).
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{src/srclog/CC3D.png}
+    \caption{Controladora de vuelo CC3D EVO}
+    \label{fig:CC3DEVO}
+\end{figure}
+
+Localizamos los pines de programación SWD en la parte inferior de la placa mediante el rastreo de pistas físicas (figura \ref{fig:SWDConector}), con el propósito de intentar un reseteo de fábrica por hardware.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth, angle=270]{src/srclog/SWD.png}
+    \caption{Conector SWD localizado en la placa}
+    \label{fig:SWDConector}
+\end{figure}
+
+
+
+\subsection{27 de Mayo \label{sec:5-27}}
+\subsubsection{Aprendizajes}
+Nos costó trabajo conseguir el conector del SWD, estuvimos intentando con diferentes, sin embargo no logramos encontrarlo, por lo que nos quedaban dos opciones
+\begin{itemize}
+    \item Pedir el conector por aliexpress, esperando que nos llegue en uno o dos meses.
+    \item Soldarle Cables al cable expuesto del conector para intentar hacer la comunicación.
+\end{itemize}
+
+Finalmente nos decantamos por la segunda opción, por lo que se procedió a soldar cables al conector, para esto se identificaron los pines del conector, los cuales son VCC, GND, SWDIO y SWCLK, esto se hizo con la ayuda de un multímetro para identificar la continuidad entre los pines del conector y los pines del microcontrolador, esto se muestra en la figura \ref{fig:SWDIdentificacion}. Se debe reconocer el trabajo que hizo Iker Garcia para soldar los cables al conector, ya que fue un trabajo delicado debido a que el conector es pequeño y los pines están muy juntos, por lo que se debe tener cuidado para no hacer corto entre los pines, esto se logró gracias a la paciencia y habilidad de Iker Garcia.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/SWDSoldados.png}
+    \caption{Cables soldados al puerto SWD}
+    \label{fig:SWDIdentificacion}
+\end{figure}
+
+Se procedió a hacer entonces un hard-reset con STM32CUBE Programmer, para esto se conectó el conector al programador, y se intentó hacer el hard-reset, sin embargo no se logró establecer la comunicación con el microcontrolador, por lo que se intentó con diferentes frecuencias de comunicación, así como diferentes configuraciones del programador, sin embargo no se logró establecer la comunicación, esto nos llevó a la conclusión de que el microcontrolador está dañado, por lo que se deberá de reemplazar la placa AIO para poder seguir avanzando en el proyecto.
+
+
+\newpage
+\section{Junio 2026}
+\subsection{2 de Junio \label{sec:6-2}}
+\subsubsection{Aprendizajes}
+La placa CC3D se quemó, y a pesar de los intentos por recuperarla y repararla (actualización de firmware, comunicación serial y \textit{hard reset} por SWD, secciones \ref{sec:4-10} a \ref{sec:5-27}) no fue posible volver a comunicarse con el microcontrolador. Por esta razón se decidió reemplazarla por una nueva controladora de vuelo, aprovechando el cambio para migrar a BetaFlight, que era uno de los objetivos planteados desde la sección \ref{sec:4-10}. Este día se dedicó a investigar BetaFlight y las controladoras de vuelo disponibles, considerando los siguientes puntos:
+\begin{itemize}
+    \item La CC3D utiliza un procesador STM32F103 (72\,MHz), cuyo soporte fue retirado en las versiones recientes de BetaFlight.
+    \item Las tarjetas actuales emplean procesadores F405 (168\,MHz), económicos y altamente capaces para drones de 5 pulgadas \cite{stm32ventajas}.
+    \item BetaFlight ofrece una comunidad activa, modos de estabilización avanzados (Angle y Horizon) y configuración mediante interfaz gráfica o terminal (CLI).
+\end{itemize}
+
+Se seleccionó la \textbf{SpeedyBee F405 V4}, debido a:
+\begin{itemize}
+    \item Procesador STM32F405 compatible con la versión actual de BetaFlight.
+    \item Factor de forma de 30.5\,$\times$\,30.5\,mm, compatible con el chassi LS210.
+    \item Se adquiere en formato \textit{stack} junto a un ESC 4 en 1 de 60 A, simplificando drásticamente el cableado y eliminando la necesidad de una PDB independiente.
+    \item Permite configuración inalámbrica por Bluetooth mediante la aplicación móvil.
+\end{itemize}
+
+
+\subsection{10 de junio}
+\subsubsection{Aprendizajes}
+Mientras se investigaba sobre otras controladoras del dron adecuadas. Se contempló la posibilidad de comprar una base de pruebas para hacer ajustes en PID en vivo. Se estuvo revisando en cuanto a precios y la mejor alternativa era fabricar una entonces se tomo una base de ventilador para el soporte y en la parte superior se adaptó.
+
+
+\begin{figure}[!ht]
+    \centering
+    % Primera figura (izquierda)
+    \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{src/srclog/BaseRef.png}
+    \caption{Base referencia}
+    \label{fig:BaseRef}
+    \end{minipage}
+    \hfill % Espacio horizontal entre las dos figuras
+    % Segunda figura (derecha)
+    \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/Base.png}
+    \caption{Base fabricada}
+    \label{fig:BaseFab}
+    \end{minipage}
+\end{figure}
+
+
+
+\subsection{23 de junio}
+\subsubsection{Aprendizajes}
+
+
+Para asegurar completa compatibilidad se consideró el tamaño de la placa
+La Speedybee (la nueva) mide 40 mm (4 mm mas que la CC3D evo) mientras que \textbf{la distancia entre los agujeros es la misma }entre las dos placas, la Speedybee tiene un diametro de 4 mm (1 mm mas que la CC3D evo)
+
+En cuanto a dimensiones de la carcasa, la CC3D Evo quedaba justo (mide 36 mm, anexo imagen), entonces quedaria un poco salida de ambos lados. y en cuanto a la altura mide 35 mm esta sobrado en cuanto a alturar porque las dos placas de la Speedy Bee suman 15 mm como altura ya de ahi seria considerar las separaciones
+
+\begin{figure}[htbp]
+    \centering
+    % Primera figura (izquierda)
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{src/srclog/Medidas Copter CC3D.png}
+        \caption{Medidas CC3D Evo}
+        \label{fig:cc3d}
+    \end{minipage}
+    \hfill % Espacio horizontal entre las dos figuras
+    % Segunda figura (derecha)
+    \begin{minipage}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.1\linewidth]{src/srclog/SPidibitamano.png}
+        \caption{Medidas SpeedyBee v4}
+        \label{fig:speedybee}
+    \end{minipage}
+\end{figure}
+
+
+
+\begin{figure}[!ht]
+    \centering
+    % Primera figura (izquierda)
+    \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth, angle =90]{src/srclog/Anchura.png}
+    \caption{Medición Anchura Frame LS-210}
+    \label{fig:Anchura}
+    \end{minipage}
+    \hfill % Espacio horizontal entre las dos figuras
+    % Segunda figura (derecha)
+    \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{src/srclog/Altura.png}
+    \caption{Medición Altura Frame LS-210}
+    \label{fig:Altura}
+    \end{minipage}
+\end{figure}
+
+
+
+\section{Agosto 2026}
+\subsection{28 de Agosto \label{sec:8-28}}
+\subsubsection{Aprendizajes}
+Se retiró la vieja CC3D y se instaló el nuevo \textit{stack} SpeedyBee F405 V4. Se conectó la tarjeta al configurador de BetaFlight y se actualizó el firmware a la versión 4.4.3 utilizando el \textit{target} \texttt{SPEEDYBEEF405V4} (figuras \ref{fig:8-28Config} y \ref{fig:8-28Updated}).
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{src/srclog/8-28ConfigFirmware.png}
+    \caption{Configuración del firmware en BetaFlight Configurator [Agosto 28, 2026]}
+    \label{fig:8-28Config}
+\end{figure}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{src/srclog/8-28FirmwareUpdated.png}
+    \caption{Firmware BetaFlight 4.4.3 instalado correctamente}
+    \label{fig:8-28Updated}
+\end{figure}
+
+Se realizó la configuración inicial del sistema:
+\begin{itemize}
+    \item Receptor configurado en protocolo IBUS sobre el puerto UART2 con mapeo AETR.
+    \item Activación del motor/armado asignado al canal auxiliar AUX1.
+    \item Protocolo de motores DSHOT300 y configuración de giro inverso (\textit{props out}: \texttt{yaw\_motors\_reversed = ON}).
+    \item Ajustes iniciales en el perfil PID 0 (reducción del término D en roll/pitch).
+\end{itemize}
+
+\section{Septiembre 2026}
+\subsection{7 de Septiembre}
+\subsubsection{Aprendizajes}
+Se soldaron los componentes de alimentación y señal para integrar la SpeedyBee. Se identificó el receptor modelo \textbf{FS-iA6B}, el cual soporta los protocolos PPM (transmisión canal por canal con mayor cableado) e I-BUS (comunicación serial por un solo hilo). Se optó por utilizar I-BUS para la comunicación con la controladora.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/FS.png}
+    \caption{Transmisor FS-iA6B}
+    \label{fig:transmisor_fs}
+\end{figure}
+
+La soldadura de los pines de alimentación en los pads de gran grosor del ESC presentó dificultad debido a que el disipador interno disipaba rápidamente el calor del cautín. El Dr. Raygoza sugirió el uso de una pistola de calor para facilitar la transferencia térmica en futuras ocasiones.
+
+\subsection{14 de Septiembre \label{sec:9-intentos}}
+\subsubsection{Aprendizajes}
+Durante septiembre y principios de octubre se realizaron varios intentos de vuelo sin éxito. En los primeros intentos los motores giraban pero el dron no lograba levantar. Para intentar solucionarlo se invirtió el sentido de giro de los motores, con lo que el dron ya levantaba, pero al despegar daba un pequeño brinco y se apagaba.
+
+También se probaron otras configuraciones, como activar el DShot bidireccional con su preset de filtros y cambiar de perfil PID, sin que el dron lograra volar. La causa de estos problemas se identificó y corrigió en la sección \ref{sec:10-13}.
+
+\subsubsection{Incidentes y puntos de mejora}
+No hubo daños en el dron, sin embargo se identificaron los siguientes puntos de mejora:
+\begin{itemize}
+    \item Se realizaron cambios sin entender la causa del problema (por ejemplo, invertir los motores), lo que generó nuevos problemas. Antes de cambiar una configuración se debe diagnosticar primero.
+    \item No se contaba con registros del \textit{blackbox}, que hubieran permitido ver por qué se apagaba el dron.
+\end{itemize}
+
+\section{Octubre 2026}
+\subsection{7 de Octubre}
+\subsubsection{Aprendizajes}
+Mediante la CLI de BetaFlight vía USB (\texttt{/dev/ttyACM0}) y scripts de diagnóstico en Python, se verificó el estado del hardware:
+\begin{itemize}
+    \item Sensores íntegros: giroscopio ICM42688P, barómetro DPS310 y OSD MAX7456 detectados sin errores en el bus I2C.
+    \item Receptor en UART2 por IBUS verificado y canales mapeados correctamente.
+    \item La bandera \texttt{RXLOSS} aparecía correctamente al apagar la emisora.
+\end{itemize}
+
+El síntoma reportado era que el dron se armaba, daba un pequeño brinco y se apagaba. Se identificó que este comportamiento corresponde a la protección \textit{Runaway Takeoff Prevention} de BetaFlight, la cual desarma el dron cuando detecta que el lazo PID se satura justo después del despegue. Esta protección se activa cuando el dron no sube derecho, es decir, cuando hay un error en el orden de los motores, en el sentido de giro o en la colocación de las hélices.
+
+Se encontró que los motores habían sido invertidos a propósito, ya que en la configuración correcta el dron no levantaba. La causa real era que las hélices estaban colocadas al revés (empujaban el aire hacia arriba); al invertir los motores el dron sí levantaba, pero el torque de yaw quedaba al contrario de lo que espera BetaFlight, provocando que la corrección de yaw empeorara el giro y se activara la protección. La solución fue intercambiar las hélices y regresar los motores a su sentido correcto para \textit{props out}:
+
+\begin{table}[!ht]
+\centering
+\caption{Sentido de giro para configuración \textit{props out} (vista superior)}
+\label{tab:giro}
+\begin{tabular}{lll}
+\hline
+Motor & Posición & Sentido \\
+\hline
+M1 & Trasero derecho & Antihorario \\
+M2 & Delantero derecho & Horario \\
+M3 & Trasero izquierdo & Horario \\
+M4 & Delantero izquierdo & Antihorario \\
+\hline
+\end{tabular}
+\end{table}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.6\linewidth]{src/srclog/axis.png}
+    \caption{Orden de los motores}
+    \label{fig:OrdenMotores}
+\end{figure}
+\newpage
+\subsection{10 de Octubre \label{sec:10-13}}
+\subsubsection{Aprendizajes}
+Se probaron configuraciones recomendadas por la comunidad. Al activar el DShot bidireccional (\texttt{dshot\_bidir = ON}) sin contar con telemetría de RPM activa en los ESC, el sistema arrojó un error de filtro RPM (figura \ref{fig:rpm_error}), por lo que se restablecieron los valores predeterminados.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{src/srclog/RPM.png}
+    \caption{Alerta de filtro RPM por ausencia de telemetría}
+    \label{fig:rpm_error}
+\end{figure}
+
+Esta se debía a que se había activado el DShot bidireccional (\texttt{dshot\_bidir = ON}) junto con un preset de filtros que asumen el filtro RPM activo, pero los ESC no estaban enviando telemetría de RPM, entonces se decidió regresar a las configuraciones por default. (Es otro tunning que sale como sugerido)
+
+\subsection{13 de Octubre}
+\subsubsection{Aprendizajes}
+
+Una vez con el dron funcionando solo quedaba calibrar el PID de acuerdo a las necesidades. Con el objetivo de que el dron sea más fácil de controlar (vuelo suave, apto para principiantes), se realizaron los cambios mostrados en la tabla \ref{tab:cambios10-13}. Todos los cambios fueron guardados con \texttt{save} y verificados con \texttt{diff} después del reinicio.
+
+\begin{table}[!ht]
+\centering
+\caption{Parámetros ajustados en BetaFlight [Octubre 13, 2026]}
+\label{tab:cambios10-13}
+\begin{tabular}{lll}
+\hline
+Parámetro & Antes & Después \\
+\hline
+\texttt{dshot\_bidir} & ON & OFF \\
+Perfil PID / Rates & 2 / 1 & 0 / 0 \\
+Filtros del giroscopio & Preset RPM & Default \\
+Modo ANGLE & No asignado (Acro) & Siempre activo \\
+\texttt{level\_limit} & 55° & 30° \\
+Rates roll/pitch (centro/máx/expo) & 70/670/0 & 40/300/0.40 \\
+Calibración del acelerómetro & Pendiente & Ajustada en superficie plana \\
+\hline
+\end{tabular}
+\end{table}
+
+Los valores PID quedaron en los valores por defecto de BetaFlight 4.4 (P/I/D/FF de roll 45/80/40/120, pitch 47/84/46/125 y yaw 45/80/0/120), los cuales están pensados para un dron de 5 pulgadas como el LS210. La calibración del acelerómetro se realizó mediante el comando MSP 205 con el dron en una superficie plana.
+
+Con estos cambios se realizó una prueba de vuelo y el dron logró volar de forma estable por primera vez con la nueva controladora, cerrando los problemas descritos en la sección \ref{sec:9-intentos}.
+
+\subsubsection{Incidentes y puntos de mejora}
+No hubo incidentes físicos este día, sin embargo se identificaron los siguientes puntos de mejora:
+\begin{itemize}
+    \item El dron volaba en modo Acro ya que no había ningún modo de vuelo asignado, lo cual dificulta mucho el control; se asignó el modo ANGLE (autonivelado).
+\end{itemize}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/Dron.png}
+    \caption{Dron Funcional}
+    \label{fig:DronFuncional}
+\end{figure}
+
+Se puede concluir entonces que, El dron..
+\begin{itemize}
+    \item Ya puede volar de forma estable.
+    \item Cuenta con dos interruptores para armar y energizar de forma independiente.
+    \item Tiene la capacidad para integrar un diseño mas completo con FPV, GPS o SD. Aprovechándose la potencia que el Speedy Bee ofrece.
+\end{itemize}
+
+\subsection{23 de Octubre \label{sec:10-23}}
+\subsubsection{Aprendizajes}
+El objetivo de este día fue que el dron pudiera mantener su altura de forma automática (\textit{altitude hold}), aprovechando el barómetro DPS310 que ya integra la SpeedyBee F405 V4. BetaFlight 4.4.3 no cuenta con esta función, la cual fue incorporada a partir de la versión 2025.12, por lo que fue necesario actualizar el firmware. El dron no cuenta con GPS ni sensor de flujo óptico, por lo que puede mantener la altura pero no su posición horizontal.
+
+Antes de actualizar se respaldó la configuración completa con el comando \texttt{diff all} desde la terminal. Después se compiló el firmware BetaFlight 2026.6.2 en el servicio en línea de BetaFlight (\textit{cloud build}) con las siguientes opciones:
+\begin{itemize}
+    \item \textit{Target}: \texttt{SPEEDYBEEF405V4}.
+    \item Protocolo de radio: IBUS. Protocolo de OSD: analógico. Protocolo de motores: DSHOT.
+    \item Opciones adicionales: \textit{Altitude Hold} y \textit{Position Hold}, además de GPS, \textit{Optical Flow} y \textit{Range Finder} para futuras ampliaciones.
+\end{itemize}
+
+La instalación presentó varios problemas:
+\begin{itemize}
+    \item En el navegador Brave el configurador no lograba acceder al dispositivo, y Firefox no permite flashear porque no soporta WebUSB, el cual es necesario para comunicarse con la controladora en modo DFU (\textit{Device Firmware Upgrade}).
+    \item La orden del configurador para reiniciar la controladora en modo DFU no funcionaba: la placa se reiniciaba en modo normal y el configurador se quedaba esperando.
+\end{itemize}
+
+La solución fue realizar el proceso desde la terminal. Primero se envió el comando \texttt{bl} por la CLI, con el cual la controladora se reinició en modo DFU (identificador USB \texttt{0483:df11}, \textit{STM32 BOOTLOADER}). Después se descargó el archivo \texttt{.hex} desde el configurador y se grabó con la herramienta \texttt{dfu-util}, realizando un borrado completo de la memoria (\textit{mass erase}). El archivo contiene dos bloques de memoria (vectores en \texttt{0x08000000} y firmware a partir de \texttt{0x08008000}), por lo que se grabaron por separado para no escribir sobre el área de configuración. La controladora arrancó correctamente con BetaFlight 2026.6.2, detectando todos sus sensores.
+
+Al haber borrado la memoria, se volvió a aplicar la configuración por la terminal (tabla \ref{tab:cambios10-23}). En esta versión algunos parámetros cambiaron de nombre, por ejemplo \texttt{level\_limit} ahora es \texttt{angle\_limit}. El modo ALTHOLD se asignó al canal AUX2 (canal 6 del receptor), el cual se activó en el transmisor y se verificó en el configurador.
+
+\begin{table}[!ht]
+\centering
+\caption{Configuración aplicada en BetaFlight 2026.6.2 [Octubre 23, 2026]}
+\label{tab:cambios10-23}
+\begin{tabular}{ll}
+\hline
+Parámetro & Valor \\
+\hline
+Receptor & IBUS en UART2, mapeo AETR \\
+\texttt{motor\_pwm\_protocol} & DSHOT300 \\
+\texttt{yaw\_motors\_reversed} & ON (\textit{props out}) \\
+Armado & AUX1, 1950--2075 \\
+Modo ANGLE & Siempre activo \\
+Modo ALTHOLD (nuevo) & AUX2, 1700--2100 \\
+\texttt{angle\_limit} & 30° \\
+Rates & Mismos del 13 de octubre \\
+Calibración del acelerómetro & Restaurada del respaldo \\
+\texttt{small\_angle} & 25° (valor por defecto) \\
+PID y filtros & Valores por defecto de 2026.6.2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Incidentes y puntos de mejora}
+\begin{itemize}
+    \item En los vuelos anteriores se observó que, en modo ANGLE, el dron no respondía al movimiento lateral (\textit{roll}) hacia ningún lado, mientras que adelante y atrás (\textit{pitch}) sí respondía. Se verificó en el configurador que el canal de roll llega completo (de 1000 a 2000), por lo que el problema no está en el control. Queda pendiente revisar el orden físico de los motores y los valores que la controladora envía a cada motor.
+    \item El peso del dron es de 497\,g, mientras que el empuje de los cuatro motores BE1806 según el fabricante es de alrededor de 520\,g. La relación empuje/peso es muy cercana a 1:1, lo que deja poco margen para maniobrar y para que el modo ALTHOLD corrija la altura.
+    \item Se debe colocar espuma sobre el barómetro para que el flujo de aire de las hélices no altere la medición de presión.
+    \item Queda pendiente la prueba de vuelo de ALTHOLD y ajustar el parámetro \texttt{ap\_hover\_throttle} con el valor real del acelerador necesario para flotar.
+    \item Los respaldos de la configuración se guardaron en la carpeta \texttt{respaldos} del proyecto.
+\end{itemize}
+
+\section{Anexos}
+
+\appendix
+\renewcommand{\thesubsection}{\Roman{subsection}}
+
+\subsection{Tabla de componentes y refacciones \label{sec:TablaComponentes}}
+\begin{table}[!ht]
+\centering
+\caption{Componentes adquiridos, fabricados y recibidos}
+\label{tab:componentes}
+\begin{tabular}{p{4.6cm}p{2.2cm}p{2.2cm}p{1.8cm}}
+\hline
+Componente & Estado & Proveedor  & Fecha \\
+\hline
+\textit{Stack} SpeedyBee F405 V4 BLS 60A (FC + ESC 4 en 1) & Instalado & AliExpress  & Junio 2026 \\
+Interruptor de 1 polo y 2 posiciones (energizado) & Instalado   & AliExpress & Abril 2026 \\
+Base de pruebas para ajuste de PID (base de ventilador adaptada) & Fabricada & Fabricación propia  & Junio 2026 \\
+Cables soldados al puerto SWD & Fabricado & Fabricación propia  & Mayo 2026 \\
+Receptor FS-iA6B (protocolo I-BUS) & Reutilizado & Incluido con el dron  & Sep 2026 \\
+Controladora CC3D EVO & Retirada (dañada) & Incluida con el dron  & Marzo 2026 \\
+\hline
+\end{tabular}
+\end{table}
+\newpage
+\subsection{LibrePilot}
+\subsubsection{Actualización de Firmware \label{sec:Firmware}}
+Para actualizar el firmware en LibrePilot se deben seguir los siguientes pasos:
+\begin{enumerate}
+    \item Abrir el software LibrePilot y conectar el dron mediante el cable USB.
+    \item Ir a la sección de configuración del firmware haciendo clic en el icono superior derecho (figura \ref{fig:Firmware}).
+    \item Verificar la correcta detección del puerto.
+    \item Desconectar el cable USB.
+    \item Seleccionar la opción \textit{Upgrade \& Erase}.
+    \item Conectar inmediatamente el cable USB para permitir que el cargador de arranque (\textit{bootloader}) reciba el paquete de actualización.
+\end{enumerate}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{src/srclog/FirmwareUpdate.png}
+    \caption{Pestaña de configuración de firmware en LibrePilot}
+    \label{fig:Firmware}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\linewidth]{src/srclog/FirmwareUpdateforo.png}
+    \caption{Referencia del foro sobre el procedimiento de actualización}
+    \label{fig:Firmwareforo}
+\end{figure}
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{FirmwareUpdate}
+Bobby's Brother (Marzo 18, 2016). \textit{CC3D bootloader problem}. Recuperado de \url{https://www.rcgroups.com/forums/showthread.php?2626688-CC3D-bootloader-problem}
+
+\bibitem{TorrenteDigital}
+Torrente Digital (2017). \textit{Eachine Racer 250 con FlySky FS-iA6 Configuración LibrePilot}. Recuperado de \url{https://youtu.be/1uklcI0D6_w?si=e9yl_73H5cXIJYUo}
+
+\bibitem{stm32ventajas}
+Ampheo (2025). \textit{Which microcontrollers are used in drones?}. Recuperado de \url{https://www.ampheo.com/blog/which-microcontrollers-are-used-in-drones}
+
+\bibitem{rogerlipo}
+Brian Schneider (2021). \textit{A Guide to Understanding LiPo Batteries}. Recuperado de \url{https://www.rogershobbycenter.com/lipoguide}
+
+\bibitem{gensacelipo}
+Tattu Gens Ace (2024). \textit{LiPo Battery Guide}. Recuperado de \url{https://gensace.de/pages/lipo-battery-guide}
+
+\bibitem{rclipo}
+Guides d'achat (2025). \textit{The LiPo Battery Guide}. Recuperado de \url{https://www.rcteam.com/en/blogs/the-rc-model-blog/lipo-battery-guide}
+
+\end{thebibliography}
+
+\end{document}

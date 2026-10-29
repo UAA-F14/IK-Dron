@@ -16,13 +16,13 @@ A 5" FPV racing drone (LS210 carbon-fiber frame) built, diagnosed and flown as a
 ## Directory structure
 ```
 ├── docs
-│   ├── generalconfig.tex
 │   ├── LogFile.pdf
-│   ├── LogFile.tex
 │   ├── REPORTE_Drone_2021_OK.pdf
 │   ├── REPORTE_Drone_2021_TEX.pdf
-│   ├── REPORTE_Drone_2021_TEX.tex
 │   ├── REPORTE_Drone_2026.pdf
+│   ├── generalconfig.tex
+│   ├── LogFile.tex
+│   ├── REPORTE_Drone_2021_TEX.tex
 │   ├── REPORTE_Drone_2026.tex
 │   ├── sn-jnl.cls
 │   └── src

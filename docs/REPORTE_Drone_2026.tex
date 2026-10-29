@@ -103,7 +103,7 @@ Mejorar, configurar y documentar el dron de carreras de 5 pulgadas capaz de real
 La figura \ref{fig:arquitectura} muestra la arquitectura del dron. La batería LiPo alimenta al ESC 4 en 1, que a su vez alimenta a los cuatro motores y a la controladora de vuelo. La controladora recibe los comandos del piloto a través del receptor (protocolo IBUS) y envía al ESC la velocidad de cada motor mediante el protocolo digital DShot300.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
 \centering
     \includegraphics[width=0.6\linewidth]{src/srclog/Schematic.png}
 \caption{Arquitectura del sistema IK-Dron}
@@ -112,7 +112,7 @@ La figura \ref{fig:arquitectura} muestra la arquitectura del dron. La batería L
 
 \subsection{Especificaciones generales}
 La tabla \ref{tab:specs} resume los componentes principales del dron. El frame, los motores, la batería y el receptor son los seleccionados por la primera generación del proyecto \cite{reporte2021}; la controladora y el ESC corresponden al \textit{stack} SpeedyBee adquirido en 2026.
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Especificaciones generales del dron}
 \label{tab:specs}
@@ -124,7 +124,7 @@ Frame & LS-210, fibra de carbono 3K, 210\,mm entre ejes (diagonal motor a motor)
 Hélices & 5 pulgadas \\
 Configuración & Cuadricóptero en X, motores con giro \textit{props out} \\
 Controladora de vuelo & SpeedyBee F405 V4 (detalle en la tabla \ref{tab:fc}) \\
-ESC & SpeedyBee BLS 60A 4 en 1 (incluido en el \textit{stack}), 3--6S, 8 bits (BLHeli\_S), con capacitor y cable XT60 incluidos \\
+ESC & SpeedyBee BLS 55A 4 en 1 (incluido en el \textit{stack}), 3--6S, 8 bits (BLHeli\_S), con capacitor y cable XT60 incluidos \\
 Motores & FlashHobby BE1806, 2300\,KV, 18\,g, empuje de 130\,g a 25,590\,RPM (datos del fabricante) \\
 Batería & LiPo Turnigy 3S (11.1\,V), 2200\,mAh, 20--40C \\
 Radiocontrol & Transmisor FlySky en modo 2 y receptor FlySky FS-iA6B (6 canales) por IBUS \\
@@ -137,7 +137,7 @@ Peso total & 497\,g \\
 \subsection{Controladora de vuelo}
 La controladora SpeedyBee F405 V4 se adquirió como \textit{stack}, es decir, junto con su ESC 4 en 1, el cual sustituye a los cuatro ESC individuales de la primera generación. Se eligió por su compatibilidad con las versiones actuales de BetaFlight, sus sensores integrados y su bajo costo \logref{Junio 2}. Los datos de la tabla \ref{tab:fc} fueron obtenidos directamente de la controladora mediante el comando \texttt{status} de la terminal de BetaFlight.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Especificaciones de la controladora SpeedyBee F405 V4}
 \label{tab:fc}
@@ -161,7 +161,7 @@ Receptor & UART2 (TX: PA2, RX: PA3) \\
 \subsection{Orden y sentido de giro de los motores}
 BetaFlight espera un orden y un sentido de giro específicos para cada motor. En este dron se utiliza la configuración \textit{props out}, mostrada en la tabla \ref{tab:motores}. Un error en el sentido de giro o en la colocación de las hélices impide el vuelo, como se describe en la sección \ref{sec:problemas}.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Orden y sentido de giro de los motores (vista superior, frente hacia arriba)}
 \label{tab:motores}
@@ -177,9 +177,9 @@ M4 & Delantero izquierdo & Antihorario \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
     \centering
-    \includegraphics[width=0.6\linewidth]{src/srclog/axis.png}
+    \includegraphics[width=0.5\linewidth]{src/srclog/axis.png}
     \caption{Orden de los motores}
     \label{fig:axis}
 \end{figure}
@@ -214,7 +214,7 @@ Para que el dron pueda flotar a una altura constante sin que el piloto corrija e
 \section{Configuración actual}
 La configuración se orientó a un vuelo suave y fácil de controlar, adecuado para pilotos principiantes. La tabla \ref{tab:config} resume los parámetros principales; los valores no listados se encuentran en los valores por defecto de BetaFlight 2026.6.2. El respaldo completo se encuentra en la carpeta \texttt{respaldos} del proyecto.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Parámetros principales de BetaFlight 2026.6.2}
 \label{tab:config}
@@ -231,8 +231,8 @@ La configuración se orientó a un vuelo suave y fácil de controlar, adecuado p
 Armado & AUX1, 1950--2075 & Interruptor de armado \\
 Modo ANGLE & Siempre activo & Autonivelado: al soltar los sticks el dron se nivela \\
 Modo ALTHOLD & AUX2, 1700--2100 & Mantiene la altura con el barómetro \\
-\texttt{angle\_limit} & 30° & Inclinación máxima en modo ANGLE \\
-\texttt{small\_angle} & 25° & No permite armar si el dron está inclinado \\
+\texttt{angle\_limit} & 30$^{\circ}$ & Inclinación máxima en modo ANGLE \\
+\texttt{small\_angle} & 25$^{\circ}$ & No permite armar si el dron está inclinado \\
 \texttt{runaway\_takeoff\_prevention} & ON & Desarma si el dron se descontrola al despegar \\
 \texttt{failsafe\_procedure} & DROP & Si pierde la señal por 1.5\,s, apaga los motores \\
 \texttt{ap\_hover\_throttle} & 1275 & Acelerador estimado para flotar (por ajustar) \\
@@ -242,11 +242,10 @@ Filtros & Por defecto & Ajustados para operar sin filtro RPM \\
 \end{tabularx}
 \end{table}
 
-\newpage
 \subsection{Ganancias PID}
 Se utilizan las ganancias por defecto de BetaFlight 2026.6.2, que son las mismas de la versión 4.4 y están diseñadas para drones de 5 pulgadas (tabla \ref{tab:pid}). Estas servirán como punto de partida para la sintonización con base en los registros del \textit{blackbox}.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Ganancias PID (perfil 0)}
 \label{tab:pid}
@@ -264,13 +263,13 @@ Yaw   & 45 & 80 & 0  & 0  & 120 \\
 \subsection{Rates}
 Se redujeron las tasas de giro (\textit{rates}, tipo \textit{Actual}) para obtener una respuesta suave a los sticks (tabla \ref{tab:rates}).
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Rates configurados (perfil 0)}
 \label{tab:rates}
 \begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Eje} & \textbf{Centro (°/s)} & \textbf{Máximo (°/s)} & \textbf{Expo} \\
+\textbf{Eje} & \textbf{Centro ($^{\circ}$/s)} & \textbf{Máximo ($^{\circ}$/s)} & \textbf{Expo} \\
 \midrule
 Roll / Pitch & 40 & 300 & 0.40 \\
 Yaw          & 40 & 250 & 0.30 \\
@@ -280,6 +279,8 @@ Yaw          & 40 & 250 & 0.30 \\
 
 Antes de cualquier cambio se recomienda guardar un respaldo de la configuración con el comando \texttt{diff all} (anexo \ref{anx:cli}).
 
+\newpage
+
 %% ============================== 6 ==============================
 \section{Manual de operación}
 \label{sec:manual}
@@ -288,7 +289,7 @@ Esta sección describe cómo utilizar el dron desde la preparación de la bater�
 \subsection{Controles del transmisor}
 El transmisor se utiliza en modo 2. La tabla \ref{tab:controles} indica la función de cada control.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Controles del transmisor (modo 2)}
 \label{tab:controles}
@@ -308,10 +309,17 @@ Interruptor del canal 6 & AUX2 & ALTHOLD: arriba mantiene la altura, abajo vuelo
 
 Los interruptores de los canales 5 y 6 se asignan en el menú \textit{Functions setup} $\rightarrow$ \textit{Aux. channels} del transmisor FlySky. Ambos deben estar abajo antes de encender el dron.
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{src/srclog/Control FS-ia6b.png}
+    \caption{Control Flysky}
+    \label{fig:placeholder}
+\end{figure}
+
 \subsection{Batería}
 La batería es una LiPo de 3 celdas (3S). Cada celda tiene un voltaje nominal de 3.7\,V; la tabla \ref{tab:bateria} muestra los voltajes de referencia.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Voltajes de referencia de la batería LiPo 3S}
 \label{tab:bateria}
@@ -344,13 +352,13 @@ Mínimo absoluto, no descargar por debajo & 3.30\,V & 9.9\,V \\
 \subsection{Armado y despegue}
 \begin{enumerate}[nosep]
     \item Con el acelerador al mínimo, subir el interruptor AUX1 para armar.
-    \item \textbf{Importante:} con la función \texttt{MOTOR\_STOP}, los motores no giran aunque el dron esté armado si el acelerador está en cero. Un dron armado debe tratarse siempre como si los motores estuvieran girando.
+    \item \textbf{Importante:} con la función \texttt{MOTOR\_STOP}, los motores no giran aunque el dron esté armado si el acelerador está en cero. \textbf{Un dron armado debe tratarse siempre como si los motores estuvieran girando.}
     \item Subir el acelerador de forma suave hasta que el dron despegue y estabilizarlo a una altura de 1 a 2\,m.
 \end{enumerate}
-Si el dron no arma, revisar las banderas de armado (sección \ref{sec:problemas}). Las causas más comunes son que el acelerador no está al mínimo, que el dron está inclinado más de 25° o que no hay señal del transmisor.
+Si el dron no arma, revisar las banderas de armado (sección \ref{sec:problemas}). Las causas más comunes son que el acelerador no está al mínimo, que el dron está inclinado más de 25$^{\circ}$ o que no hay señal del transmisor.
 
 \subsection{Vuelo en modo ANGLE}
-El modo ANGLE está siempre activo. En este modo el stick derecho controla el ángulo de inclinación del dron (máximo 30°) y, al soltarlo, el dron regresa a la posición nivelada. El acelerador controla la altura y el stick izquierdo horizontal gira el dron. Se recomienda realizar movimientos pequeños y suaves, y mantener el dron siempre a la vista.
+El modo ANGLE está siempre activo. En este modo el stick derecho controla el ángulo de inclinación del dron (máximo 30$^{\circ}$) y, al soltarlo, el dron regresa a la posición nivelada. El acelerador controla la altura y el stick izquierdo horizontal gira el dron. Se recomienda realizar movimientos pequeños y suaves, y mantener el dron siempre a la vista.
 
 \subsection{Mantenimiento de altura (ALTHOLD)}
 \begin{enumerate}[nosep]
@@ -396,7 +404,7 @@ El modo ANGLE está siempre activo. En este modo el stick derecho controla el á
 \label{sec:problemas}
 La tabla \ref{tab:problemas} reúne los problemas encontrados durante el proyecto, su causa y su solución. Las banderas (\textit{flags}) se consultan con el comando \texttt{status} en la línea \textit{Arming disable flags}, o en la pestaña \textit{Setup} del BetaFlight Configurator.
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \centering
 \caption{Problemas frecuentes y su solución}
 \label{tab:problemas}
